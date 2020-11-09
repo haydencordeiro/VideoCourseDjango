@@ -22,3 +22,10 @@ class VideoAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Video, VideoAdmin)
+
+
+class TypeAccessAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in TypeAccess._meta.get_fields()]
+
+
+admin.site.register(TypeAccess, TypeAccessAdmin)

@@ -90,7 +90,13 @@
                                         <li><a href="#">API</a></li>
                                     </ul> -->
                                 </li>
+                                {% if request.user.is_authenticated %}
+                                <li class="btn-cta"><span style="text-decoration:underline;">Hayden</span></li>
+                                <li class="btn-cta"><a href="#"><span>Logout</span></a></li>
+
+                                {% else %}
                                 <li class="btn-cta"><a href="#"><span>Login</span></a></li>
+                                {% endif %}
 
                             </ul>
                         </div>
@@ -99,6 +105,30 @@
                 </div>
             </div>
         </nav>
+        {% if messages %}
+        <ul class="messages"
+            style="z-index:1;position:fixed;top:20px;width: 100vw;display: flex;align-items: center;flex-direction: column;">
+            {% for message in messages %}
+            <!-- <li style="position: fixed;top:0;left:50%;">{{ message }}</li>
+             -->
+            <div class="alert alert-danger alert-dismissible fade in" style="z-index: 1" id="{{message}}">
+                {{ message }}
+            </div>
+            <script>
+                setTimeout(function () {
+
+                    var a = document.getElementsByClassName("alert alert-danger alert-dismissible fade in");
+                    for (var i = 0; i < a.length; i++) {
+
+                        a[i].style.display = "none";
+                    }
+
+
+                }, 5000);    
+            </script>
+            {% endfor %}
+        </ul>
+        {% endif %}
 
         {% block content %}
         {% endblock content %}
