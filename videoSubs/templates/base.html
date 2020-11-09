@@ -91,11 +91,16 @@
                                     </ul> -->
                                 </li>
                                 {% if request.user.is_authenticated %}
-                                <li class="btn-cta"><span style="text-decoration:underline;">Hayden</span></li>
-                                <li class="btn-cta"><a href="#"><span>Logout</span></a></li>
+                                <li class="btn-cta"><span
+                                        style="text-decoration:underline;">{{ request.user.first_name|capfirst  }}
+                                    </span>
+                                </li>
+                                <li class="btn-cta" style="z-index:3;"><a
+                                        href="{% url 'logout' %}"><span>Logout</span></a></li>
 
                                 {% else %}
-                                <li class="btn-cta"><a href="#"><span>Login</span></a></li>
+                                <li class="btn-cta"><a href="{% url 'LoginView' %}"
+                                        style="padding: 2rem;"><span>Login</span></a></li>
                                 {% endif %}
 
                             </ul>

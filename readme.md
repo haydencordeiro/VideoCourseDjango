@@ -2,12 +2,12 @@
 
 - [x] Setup
 - [x] Load Static Files
-- [ ] Login Page
-- [ ] Register Page
+- [x] Login Page
+- [x] Register Page
 - [ ] Admin Dashboard ui
-- [ ] Create Models
-- [ ] Register
-- [ ] Login
+- [x] Create Models
+- [x] Register
+- [x] Login
 - [ ] Create ui to play video (check if django has a build in video package)
 - [ ] Home page Pricing
 - [ ] Home page Free videos
