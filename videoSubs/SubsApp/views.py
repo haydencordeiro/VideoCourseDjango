@@ -42,8 +42,10 @@ def home(request):
 
 
 def VideosPage(request):
-    print('here')
-    return render(request, 'videos.html')
+    context = {
+        'videos': Video.objects.all()
+    }
+    return render(request, 'videos.html', context)
 
 
 def logout_request(request):

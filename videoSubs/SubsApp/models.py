@@ -25,7 +25,8 @@ class Subscription(models.Model):
 
 class Video(models.Model):
     title = models.CharField(max_length=100)
-    ytId = models.CharField(max_length=100)
+    ytId = models.CharField(max_length=1000)
+    desc = models.CharField(max_length=100, default="")
     subType = models.ForeignKey(
         SubType, on_delete=models.CASCADE)
 
