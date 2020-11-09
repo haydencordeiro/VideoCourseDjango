@@ -11,7 +11,7 @@
 - [ ] Create ui to play video (check if django has a build in video package)
 - [ ] Home page Pricing
 - [ ] Home page Free videos
-- [ ] Videos page show videos
+- [x] Videos page show videos
 - [ ] Videos page prevent watching videos which dont match the plan
 - [ ] Admin part
 - [ ] Payment Implementation
