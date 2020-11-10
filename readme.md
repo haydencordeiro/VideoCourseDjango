@@ -8,13 +8,19 @@
 - [x] Create Models
 - [x] Register
 - [x] Login
-- [ ] Create ui to play video (check if django has a build in video package)
-- [ ] Home page Pricing
-- [ ] Home page Free videos
+- [x] Create ui to play video (check if django has a build in video package)
+- [x] Home page Pricing
+- [x] Home page Free videos
 - [x] Videos page show videos
-- [ ] Videos page prevent watching videos which dont match the plan
-- [ ] Admin part
-- [ ] Payment Implementation
+- [x] Videos page prevent watching videos which dont match the plan
+- [x] Payment Implementation
+- [ ] Admin add video
+- [ ] Admin add testimonial
+- [ ] Admin add subscription
+- [ ] Admin delete video
+- [ ] Admin delete testimonial
+- [ ] Admin delte subscription
+- [ ]
 - [ ]
 
 ### TO DO (If Time)
