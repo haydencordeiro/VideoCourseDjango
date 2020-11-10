@@ -36,3 +36,10 @@ class TransationsAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Transations, TransationsAdmin)
+
+
+class TestimonialsAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in Testimonials._meta.get_fields()]
+
+
+admin.site.register(Testimonials, TestimonialsAdmin)

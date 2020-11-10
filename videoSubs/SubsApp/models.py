@@ -18,6 +18,7 @@ class Subscription(models.Model):
         User, on_delete=models.CASCADE)
     subType = models.OneToOneField(
         SubType, on_delete=models.CASCADE)
+    date = models. DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.subType.name
@@ -50,3 +51,8 @@ class Transations(models.Model):
     paytmOID = models.CharField(max_length=100, default="")
     subType = models.ForeignKey(
         SubType, on_delete=models.CASCADE, null=True)
+
+
+class Testimonials(models.Model):
+    name = models.CharField(max_length=100)
+    desc = models.CharField(max_length=1000)

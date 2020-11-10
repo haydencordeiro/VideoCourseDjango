@@ -10,18 +10,24 @@ from django.http import (HttpResponse, HttpResponseNotFound, Http404,
                          HttpResponseRedirect, HttpResponsePermanentRedirect)
 from django.views.decorators.csrf import csrf_exempt
 from .Paytm import Checksum
+import datetime
+import pytz
 # Create your views here.
 MERCHANT_KEY = 'kbzk1DSbJiV_O3p5'
 
 
 def home(request):
-    print(request.user)
-    print(request.user)
-    print(request.user)
-    print(request.user)
-    print(request.user)
-    print(request.user)
-    # messages.info(request, 'Three creditasdfs remain in your account.')
+    # if there is a pack and the limit is over remove it
+    try:
+        subCurrent = Subscription.objects.get(user=request.user)
+
+        my_date = datetime.datetime.now(pytz.timezone('Asia/Calcutta'))
+        timeLeft = my_date-subCurrent.date
+        secondsLeft = timeLeft.seconds
+        if(secondsLeft > 600):
+            subCurrent.delete()
+    except:
+        messages.info(request, 'Buy a pack to watch videos')
 
     # get list of first 10 free videos
     freeVideos = Video.objects.filter(subType__name="Free")
@@ -46,6 +52,7 @@ def home(request):
         'SubDetailsList': SubDetailsList,
         'Sub_Type': zip(Sub_Type, accessList),
         'userSubType': None,
+        'testimonials': Testimonials.objects.all(),
 
     }
     return render(request, 'index.html', context)
@@ -53,11 +60,32 @@ def home(request):
 
 @login_required(login_url='/login')
 def VideosPage(request):
-
+    try:
+        userSubType = Subscription.objects.get(user=request.user)
+        typesAll = TypeAccess.objects.filter(subType=userSubType.subType)
+        typesAllowed = []
+        for i in typesAll:
+            typesAllowed.append(i.canAccess.name)
+    except:
+        typesAllowed = []
+    print(typesAllowed)
+    print(typesAllowed)
+    print(typesAllowed)
+    print(typesAllowed)
+    print(typesAllowed)
+    print(typesAllowed)
+    typesAllowed = ','.join(typesAllowed)
+    print(typesAllowed)
+    print(typesAllowed)
+    print(typesAllowed)
+    print(typesAllowed)
+    print(typesAllowed)
+    print(typesAllowed)
     context = {
         'videos': Video.objects.all(),
-        'userSubType': Subscription.objects.get(user=request.user)
+        'typesAllowed': typesAllowed,
     }
+
     return render(request, 'videos.html', context)
 
 

@@ -42,7 +42,7 @@
 						<span class="posted_on" style="background-color:{{i.subType.color}};">{{i.subType}}</span>
 						<!-- <span class="comment"><a href="">21<i class="icon-speech-bubble"></i></a></span> -->
 						<p>{{i.desc}}.</p>
-						{% if i.subType == userSubType.subType %}
+						{% if i.subType.name in typesAllowed %}
 						<a href="javascript:customModal('{{i.ytId}}')" class="btn btn-primary">Watch Now!</a>
 						{% else %}
 						<a href="javascript:customModal1()" class="btn btn-primary">Watch Now!</a>
