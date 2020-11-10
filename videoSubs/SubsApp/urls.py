@@ -6,4 +6,6 @@ urlpatterns = [
     path("logout", views.logout_request, name="logout"),
     path("login", views.LoginView, name="LoginView"),
     path("register", views.RegisterView, name="RegisterView"),
+    path("checkout/<int:id>/", views.checkout, name="Checkout"),
+    path("handlerequest/", views.handlerequest, name="HandleRequest"),
 ]

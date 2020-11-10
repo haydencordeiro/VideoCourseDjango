@@ -574,7 +574,11 @@
 							<!-- <li>10 Body Building</li> -->
 							{% endfor %}
 						</ul>
-						<a href="#" class="btn btn-select-plan btn-sm">Select Plan</a>
+						<form action="/checkout/{{i.0.id}}/" method="POST">
+							{% csrf_token %}
+							<button type="submit" class="btn btn-select-plan btn-sm"
+								style="background-color: #F85A16;">Select Plan</a>
+						</form>
 					</div>
 				</div>
 				{% endfor %}
@@ -770,19 +774,17 @@
 						<!-- <span class="comment"><a href="">21<i class="icon-speech-bubble"></i></a></span> -->
 						<p>Far far away, behind the word mountains, far from the countries Vokalia and
 							Consonantia, there live the blind texts.</p>
-						{% if i.subType == userSubType.subType %}
+
 						<a href="javascript:customModal('{{i.ytId}}')" class="btn btn-primary">Watch Now!</a>
-						{% else %}
-						<a href="javascript:customModal1()" class="btn btn-primary">Watch Now!</a>
-						{% endif %}
+
+
 					</div>
 				</div>
+				<!-- end here -->
 			</div>
-			<!-- end here -->
 			{% endfor %}
 
 		</div>
 	</div>
-</div>
 
-{% endblock content %}
+	{% endblock content %}
