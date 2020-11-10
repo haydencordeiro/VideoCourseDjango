@@ -17,7 +17,8 @@ def home(request):
     # messages.info(request, 'Three creditasdfs remain in your account.')
 
     # get list of first 10 free videos
-    freeVideos = Video.objects.filter(subType__name="Free")[0:10]
+    freeVideos = Video.objects.filter(subType__name="Free")
+    freeVideos = freeVideos[0:]
     # get List of subscriptions
     accessList = []
 
@@ -32,18 +33,22 @@ def home(request):
         temp2 = [i.canAccess.name for i in temp]
         accessList.append(','.join(temp2))
     SubDetailsList.append(['', '24 hours access'])
-    # print(SubDetailsList, accessList)
+
     context = {
         'freeVideos': freeVideos,
         'SubDetailsList': SubDetailsList,
         'Sub_Type': zip(Sub_Type, accessList),
+        'userSubType': Subscription.objects.get(user=request.user)
+
     }
     return render(request, 'index.html', context)
 
 
 def VideosPage(request):
+
     context = {
-        'videos': Video.objects.all()
+        'videos': Video.objects.all(),
+        'userSubType': Subscription.objects.get(user=request.user)
     }
     return render(request, 'videos.html', context)
 

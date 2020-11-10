@@ -786,7 +786,11 @@
 						<!-- <span class="comment"><a href="">21<i class="icon-speech-bubble"></i></a></span> -->
 						<p>Far far away, behind the word mountains, far from the countries Vokalia and
 							Consonantia, there live the blind texts.</p>
-						<a href="#" class="btn btn-primary" style="background-color:{{i.subType.color}}">Watch Video</a>
+						{% if i.subType == userSubType.subType %}
+						<a href="javascript:customModal('{{i.ytId}}')" class="btn btn-primary">Watch Now!</a>
+						{% else %}
+						<a href="javascript:customModal1()" class="btn btn-primary">Watch Now!</a>
+						{% endif %}
 					</div>
 				</div>
 			</div>

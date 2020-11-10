@@ -32,7 +32,7 @@
 
 		<div class="row row-bottom-padded-md">
 			{% for i in videos %}
-			{% if forloop.counter < 2 %}
+
 			<div class="col-lg-4 col-md-4">
 				<div class="fh5co-blog">
 					<a href="#"><img class="img-responsive" src="http://img.youtube.com/vi/{{i.ytId}}/hqdefault.jpg"
@@ -42,32 +42,19 @@
 						<span class="posted_on" style="background-color:{{i.subType.color}};">{{i.subType}}</span>
 						<!-- <span class="comment"><a href="">21<i class="icon-speech-bubble"></i></a></span> -->
 						<p>{{i.desc}}.</p>
-						<a href="javascript:customModal()" class="btn btn-primary">Watch Now!</a>
+						{% if i.subType == userSubType.subType %}
+						<a href="javascript:customModal('{{i.ytId}}')" class="btn btn-primary">Watch Now!</a>
+						{% else %}
+						<a href="javascript:customModal1()" class="btn btn-primary">Watch Now!</a>
+						{% endif %}
 					</div>
 				</div>
 			</div>
 
 
 
-			{% endif %}
 			{% endfor %}
 		</div>
-
-	</div>
-</div>
-<div class="coverall customHide " id="over" onclick="customModal()">
-	<span> </span>
-</div>
-<div class="customModal customHide" id="inputModal">
-
-	<div class="modalContent">
-		<iframe width="854" height="480"
-			src="https://www.youtube-nocookie.com/embed/cPVgwz5aN1o?mode=opaque&amp;rel=0&amp;autohide=1&amp;showinfo=0&amp;wmode=transparent"
-			frameborder="0" allowfullscreen></iframe>
-	</div>
-	<div class="modalFotter">
-		<button onclick="customModal()"
-			style="background-color: #EE4F73;position: relative;right:10px;width:auto;">Close</button>
 
 	</div>
 </div>
@@ -89,74 +76,5 @@
 			</div>
 		</div> -->
 
-<script>
-	const over = document.getElementById('over');
-	const modal = document.getElementById('inputModal');
-	var customModal = function (videoId) {
-		console.log(videoId);
 
-		over.classList.toggle('customHide');
-		modal.classList.toggle('customHide');
-	}
-</script>
-<style>
-	.coverall {
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100vw;
-		height: 100vh;
-		background-color: rgb(0, 0, 0);
-		opacity: 0.4;
-	}
-
-	.customHide {
-		display: none !important;
-		/* position: none; */
-	}
-
-	.customModal {
-		border-radius: 10px;
-		height: 400px;
-		width: 400px;
-		position: fixed;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		background-color: #fff;
-		display: flex;
-		flex-direction: column;
-		justify-content: flex-start;
-		align-items: center;
-	}
-
-	.modalHeader {
-		padding: 1rem;
-		/* background-color: yellow; */
-		width: 100%;
-		text-align: center;
-		border-bottom: 2px solid rgba(0, 0, 0, 0.1);
-	}
-
-	.modalFotter {
-		padding: 1rem;
-		display: flex;
-		width: 100%;
-		justify-content: flex-end;
-		border-top: 2px solid rgba(0, 0, 0, 0.1);
-	}
-
-	.modalFotter button {
-		padding: 0.4rem;
-		margin-left: 1rem;
-		background-color: dodgerblue;
-		border: none;
-		border-radius: 10%;
-		color: #fff;
-	}
-
-	.modalContent {
-		flex: 1;
-	}
-</style>
 {% endblock content %}
