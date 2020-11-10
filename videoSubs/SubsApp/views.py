@@ -15,8 +15,12 @@ MERCHANT_KEY = 'kbzk1DSbJiV_O3p5'
 
 
 def home(request):
-
-    # messages.info(request, 'Three credits remain in your account.')
+    print(request.user)
+    print(request.user)
+    print(request.user)
+    print(request.user)
+    print(request.user)
+    print(request.user)
     # messages.info(request, 'Three creditasdfs remain in your account.')
 
     # get list of first 10 free videos
@@ -96,17 +100,26 @@ def LoginView(request):
 
 
 def checkout(request, id):
+    if not request.user.is_authenticated:
+        return HttpResponsePermanentRedirect(reverse('LoginView'))
     if request.method == "POST":
         # return render(request, 'shop/checkout.html', {'thank':thank, 'id': id})
         # Request paytm to transfer the amount to your account after payment by user
-        price = SubType.objects.get(id=id)
-
+        subType = SubType.objects.get(id=id)
+        if(subType.discountPrice > 0):
+            price = subType.discountPrice
+        else:
+            price = subType.price
+        trans = Transations(user=request.user, amount=price, subType=subType
+                            )
+        trans.save()
+        trans.paytmOID = '1524dgatshdcpsodu'+str(trans.id)
+        trans.save()
         param_dict = {
-
             'MID': 'WorldP64425807474247',
-            'ORDER_ID': str(3),
-            'TXN_AMOUNT': str(price.price),
-            'CUST_ID': request.user.username,
+            'ORDER_ID': trans.paytmOID,
+            'TXN_AMOUNT': str(trans.amount),
+            'CUST_ID': str(trans.user.id),
             'INDUSTRY_TYPE_ID': 'Retail',
             'WEBSITE': 'WEBSTAGING',
             'CHANNEL_ID': 'WEB',
@@ -122,6 +135,9 @@ def checkout(request, id):
 def handlerequest(request):
     # paytm will send you post request here
     form = request.POST
+    print(form)
+    msg = ""
+
     response_dict = {}
     for i in form.keys():
         response_dict[i] = form[i]
@@ -131,8 +147,26 @@ def handlerequest(request):
     verify = Checksum.verify_checksum(response_dict, MERCHANT_KEY, checksum)
     if verify:
         if response_dict['RESPCODE'] == '01':
-            print('order successful')
+            trans = Transations.objects.get(paytmOID=form['ORDERID'])
+            trans.success = True
+            trans.save()
+            try:
+                tuser = Subscription.objects.get(user=trans.user)
+                tuser.subType = trans.subType
+                tuser.save()
+            except:
+                tuser = Subscription(user=trans.user, subType=trans.subType)
+                tuser.save()
+
+            tuser.subType = trans.subType
+            tuser.save()
+            msg = 'payment successful'
+
         else:
-            print('order was not successful because' +
-                  response_dict['RESPMSG'])
-    return render(request, 'paymentstatus.html', {'response': response_dict})
+            msg = 'order was not successful because ' + \
+                response_dict['RESPMSG']
+
+    messages.info(request, msg)
+    return HttpResponsePermanentRedirect(reverse('home'))
+
+    # return render(request, 'paymentstatus.html', {'response': response_dict})

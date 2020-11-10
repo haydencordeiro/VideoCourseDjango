@@ -39,3 +39,14 @@ class TypeAccess(models.Model):
         SubType, on_delete=models.CASCADE, related_name="subType")
     canAccess = models.ForeignKey(
         SubType, on_delete=models.CASCADE, related_name="canAccess")
+
+
+class Transations(models.Model):
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE)
+    amount = models.IntegerField()
+    date = models. DateTimeField(auto_now=True)
+    success = models.BooleanField(default=False)
+    paytmOID = models.CharField(max_length=100, default="")
+    subType = models.ForeignKey(
+        SubType, on_delete=models.CASCADE, null=True)

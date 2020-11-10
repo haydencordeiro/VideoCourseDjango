@@ -29,3 +29,10 @@ class TypeAccessAdmin(admin.ModelAdmin):
 
 
 admin.site.register(TypeAccess, TypeAccessAdmin)
+
+
+class TransationsAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in Transations._meta.get_fields()]
+
+
+admin.site.register(Transations, TransationsAdmin)
