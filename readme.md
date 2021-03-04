@@ -38,7 +38,7 @@ During the pandemic a lot of gyms closed, this was a way to bring the gym to you
 
 ![Customer Home Page](/screenshots/ClientHome.png?raw=true)
 
-![Customer Videos Page](/screenshots/ClientVideos?raw=true)
+![Customer Videos Page](/screenshots/ClientVideos.png?raw=true)
 
 ![Customer Payment Page](/screenshots/ClientPayment.png?raw=true)
 
