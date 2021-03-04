@@ -16,7 +16,7 @@ class SubType(models.Model):
 class Subscription(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE)
-    subType = models.OneToOneField(
+    subType = models.ForeignKey(
         SubType, on_delete=models.CASCADE)
     date = models. DateTimeField(auto_now=True)
 

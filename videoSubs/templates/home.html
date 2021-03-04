@@ -1,0 +1,148 @@
+{% extends 'Adminbase.html' %}
+{% block content %}
+<!-- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> -->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+        var data = google.visualization.arrayToDataTable({{ activitesGraph| safe }}
+
+    );
+
+    var options = {
+        title: 'Number of Transactions',
+        curveType: 'function',
+        legend: { position: 'bottom' }
+    };
+
+    var chart = new google.visualization.AreaChart(document.getElementById('curve_chart'));
+
+    chart.draw(data, options);
+  }
+</script>
+
+<div id="print-content">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4" style="padding-left: 30px;">
+        <h1 class="h3 mb-0 text-gray-800">Statistics</h1>
+    </div>
+
+    <div class="row">
+
+        <div class="col-xl-3 col-md-6 mb-4" style="padding-left: 30px;">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                <a href="tables120hrs">Total Number of Videos</a>
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{totalNoOfVideos}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4" style="padding-left: 30px;">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                <a href="tables120hrs">Total Number of Users</a>
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{totalNoOfUsers}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4" style="padding-left: 30px;">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                <a href="tables120hrs">No Of Active Subscriptions</a>
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{noOfSubs}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4" style="padding-left: 30px;">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                <a href="tables120hrs">No Of Subscription Types</a>
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{noOfSubtypes}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <!-- Content Row -->
+    <style>
+        .dot {
+            height: 3rem;
+            width: 3rem;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 1rem;
+        }
+    </style>
+    <div class="row">
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="my-3 p-4 bg-white rounded shadow-sm ml-5 pr-6 border-left-primary shadow " style="min-width:30%;">
+            <h6 class="border-bottom pb-2 mb-0">Upcoming Activities</h6>
+            {% for act in recentTrans %}
+            <div class="d-flex text-muted pt-3" style="min-width:100%;">
+                {% if act.success %}
+                <span class='dot' style='background-color:#96D4A4'></span>
+                {% else %}
+                <span class='dot' style='background-color:#F5C6CA'></span>
+                {% endif %}
+
+                <p class="pb-3 mb-0 small lh-sm border-bottom">
+                    <strong class="d-block text-gray-dark">{{act.user}}</strong>
+                    {{act.amount}}₹
+                </p>
+            </div>
+
+
+            {% endfor %}
+            <small class="d-block text-end mt-3">
+                <a href="{% url 'home' %}">All Activities</a>
+            </small>
+        </div>
+        <!-- <div id="line_top_x"></div> -->
+        <div id="curve_chart" class="col-xl-1 col-md-6 ml-4 mb-4 card border-left-primary shadow "
+            style=" margin-top:1rem;min-width: 60%;border-radius:0.35rem;overflow: hidden;">
+        </div>
+    </div>
+</div>
+<input type="button" onclick="printDiv('print-content')" value="Download" class="btn btn-primary" />
+<script type="text/javascript">
+    function printDiv(divName) {
+        var printContents = document.getElementById(divName).innerHTML;
+        w = window.open();
+        w.document.write(printContents);
+        w.print();
+        w.close();
+    }
+</script>
+{% endblock %}

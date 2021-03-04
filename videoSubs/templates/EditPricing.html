@@ -1,0 +1,465 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Colorlib Templates">
+    <meta name="author" content="Colorlib">
+    <meta name="keywords" content="Colorlib Templates">
+
+    <!-- Title Page-->
+    <title>Add Area Based Project</title>
+
+    <!-- Icons font CSS-->
+    <link href="{% static 'vendor/mdi-font/css/material-design-iconic-font.min.css' %}" rel="stylesheet" media="all">
+    <link href="{% static 'vendor/font-awesome-4.7/css/font-awesome.min.css' %}" rel="stylesheet" media="all">
+    <!-- Font special for pages-->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i"
+        rel="stylesheet">
+
+    <!-- Vendor CSS-->
+    <link href="{% static 'vendor/select2/select2.min.css' %}" rel="stylesheet" media="all">
+    <!--    <link href="{% static 'vendor/datepicker/daterangepicker.css' %}" rel="stylesheet" media="all">-->
+
+    <!-- Main CSS-->
+    <link href="{% static 'css/main.css' %}" rel="stylesheet" media="all">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" />
+
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="{% static 'css/sb-admin-2.min.css' %}" rel="stylesheet">
+
+    <link href="{% static 'css/custom.css' %}" rel="stylesheet">
+</head>
+
+<body id="page-top">
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <div class="sidebar-brand-icon rotate-n-15">
+
+                </div>
+                <div class="sidebar-brand-text mx-3">Menu </div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+
+            <li class="nav-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+                <a class="nav-link" href="{% url 'AdminHome' %}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Home</span></a>
+            </li>
+            <li class="nav-item {% if request.resolver_match.url_name == 'AddVideo' %}active{% endif %}">
+                <a class="nav-link" href="{% url 'AddVideo' %}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Videos</span></a>
+            </li>
+            <li class="nav-item {% if request.resolver_match.url_name == 'AddTestimonial' %}active{% endif %}">
+                <a class="nav-link" href="{% url 'AddTestimonial' %}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Testimonials</span></a>
+            </li>
+            <li class="nav-item {% if request.resolver_match.url_name == 'AddSubType' %}active{% endif %}">
+                <a class="nav-link" href="{% url 'AddSubType' %}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Pricing</span></a>
+            </li>
+            <!-- Divider -->
+            <hr class="sidebar-divider ">
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Live Site
+            </div>
+
+            <li class="nav-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+                <a class="nav-link" href="{% url 'home' %}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Preview Site</span></a>
+            </li>
+            <!-- Nav Item - Utilities Collapse Menu -->
+            <!-- <li class="nav-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+    <a class="nav-link " href="reports" aria-expanded="false">
+        <i class="fas fa-fw fa-wrench"></i>
+        <span>Reports</span>
+    </a>
+
+</li> -->
+
+            <!-- <li class="nav-item {% if request.resolver_match.url_name == 'Table120' %}active{% endif %}">
+    <a class="nav-link " href="tables120hrs" aria-expanded="false">
+        <i class="fas fa-fw fa-wrench"></i>
+        <span>Tables</span>
+    </a>
+
+</li> -->
+
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block" />
+
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <!-- Topbar Search -->
+                    <div class="input-group">
+                        <div class="rs-select2 js-select-simple select--no-search">
+
+                            <select name="select2" required id="select2" onchange="validate(this.value);">
+                                <option value="">{{CurrentYear}}</option>
+                                {% for year in AllYears %}
+                                <option value="{{year.id}}">{{year.YearAcademic}}</option>
+                                {% endfor %}
+                            </select>
+                            {% for year in AllYears %}
+                            <form action="{% url 'SortAreaBased' year.id %}" method="post" id="{{year.id}}">
+                                {% csrf_token %}
+                            </form>
+                            {% endfor %}
+                            <div class="select-dropdown"></div>
+                        </div>
+                    </div>
+
+                    <script>
+                        function validate(yearId) {
+                            a = document.getElementById(yearId);
+                            a.submit()
+                        }
+                    </script>
+
+                    <ul class="navbar-nav ml-auto">
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                            placeholder="Search for..." aria-label="Search"
+                                            aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+
+                        <!-- Button trigger modal -->
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalCenterTitle">Edit Subscription Type
+                                        </h5>
+                                        <!--        <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+                                        <!--          <span aria-hidden="true">&times;</span>-->
+                                        <!--        </button>-->
+                                    </div>
+                                    <div class="modal-body">
+
+                                        <div class="card-body">
+                                            <form method="POST" id="ab-project-edit">
+                                                {% csrf_token %}
+                                                <div class="form-row">
+                                                    <div class="name">Name</div>
+                                                    <div class="value">
+                                                        <div class="input-group">
+                                                            <input class="input--style-5" value="{{sub.name}}"
+                                                                type="text" name="name" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="name">Price</div>
+                                                    <div class="value">
+                                                        <div class="input-group">
+                                                            <input class="input--style-5" value="{{sub.price}}"
+                                                                type="text" name="price" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="name">Discount Price</div>
+                                                    <div class="value">
+                                                        <div class="input-group">
+                                                            <input class="input--style-5" value="{{sub.discountPrice}}"
+                                                                type="text" name="dprice" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-row">
+                                                    <div class="name">Color</div>
+                                                    <div class="value">
+                                                        <div class="input-group">
+                                                            <input class="input--style-5" value="{{sub.color}}"
+                                                                type="text" name="color" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <form action="{% url 'AddSubType' %}" method="GET" id="close">
+
+                                            <button type="submit" class="btn btn-primary">close</button>
+                                        </form>
+                                        <button type="button" class="btn btn-primary" href="javascript:{}"
+                                            onclick="document.getElementById('ab-project-edit').submit();">Update</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Nav Item - Alerts -->
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-bell fa-fw"></i>
+                                <!-- Counter - Alerts -->
+                                <span class="badge badge-danger badge-counter">{{unapprovedLeaderActivities}}</span>
+                            </a>
+                            <!-- Dropdown - Alerts -->
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="alertsDropdown">
+                                <h6 class="dropdown-header">
+                                    Alerts Center
+                                </h6>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-primary">
+                                            <i class="fas fa-file-alt text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="small text-gray-500">December 12, 2019</div>
+                                        <span class="font-weight-bold">To be updated soon...</span>
+                                    </div>
+                                </a>
+
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-warning">
+                                            <i class="fas fa-exclamation-triangle text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="small text-gray-500">December 2, 2019</div>
+                                        Spending Alert: We've noticed unusually high spending for your account.
+                                    </div>
+                                </a>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                            </div>
+                        </li>
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{LoggedInUser}}</span>
+                                <img class="img-profile rounded-circle" src="{% static 'img/nsslogo.jpg' %}">
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Profile
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+                <!-- <div class="page-wrapper p-t-45 p-b-50">
+                <div class="wrapper wrapper--w790">
+                    <div class="card card-5">
+                        <div class="card-heading">
+                            <h2 class="title">Add Activity</h2>
+                        </div>
+                        <div class="card-body">
+                            <form method="POST">
+                                <div class="form-row">
+                                    <div class="name">Activity Name</div>
+                                    <div class="value">
+                                        <div class="input-group">
+                                            <input class="input--style-5" type="text" name="actname">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="name">Activity Hours</div>
+                                    <div class="value">
+                                        <div class="input-group">
+                                            <input class="input--style-5" type="text" name="acthours">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="name">Activity Type</div>
+                                    <div class="value">
+                                        <div class="input-group">
+                                            <div class="rs-select2 js-select-simple select--no-search">
+                                                <select name="subject">
+                                                    <option disabled="disabled" selected="selected">Choose option</option>
+                                                    <option>Area Based Project 1</option>
+                                                    <option>Area Based Project 2</option>
+                                                    <option>University District</option>
+                                                    <option>College Work</option>
+                                                </select>
+                                                <div class="select-dropdown"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <button class="btn btn--radius-2 btn--red" type="submit" style="margin-top: 70px;margin-left: 250px; align: center;">Add</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">Tables</h1>
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Area Based Projects</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered display" id="example" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Project Name</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </thead>
+
+
+                                    <tbody>
+                                        {% for activity in all_projects %}
+                                        <tr>
+                                            <td>{{activity.ABProjectName}}</td>
+                                            <td><a class="btn btn-primary" href="{% url 'home' activity.id %}">EDIT</a>
+                                            </td>
+                                            <td>
+                                                <form action="{% url 'home' pk=activity.id %}" method="post"
+                                                    onSubmit="return confirm('Are you sure you wish to delete?');">
+                                                    {% csrf_token %}
+                                                    <input class="btn btn-default btn-danger" type="submit"
+                                                        value="Delete" />
+                                                </form>
+                                            </td>
+                                    </tbody>
+                                    </tbody>
+                                    {% endfor %}
+                                    <tfoot>
+                                        <tr>
+                                            <th>Project Name</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+
+            <script src="{% static 'js/jquery.min.js' %}"></script> <!-- jquery libraries -->
+            <script src="{% static 'js/bootstrap.min.js' %}"></script>
+            <!--    <script  src="js/forms.js"></script>-->
+
+
+
+
+            <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+            <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+            <!-- Core plugin JavaScript-->
+            <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+            <!-- Custom scripts for all pages-->
+            <script src="{% static 'js/sb-admin-2.min.js' %}"></script>
+            <!-- Vendor JS-->
+            <script src="{% static 'vendor/select2/select2.min.js' %}"></script>
+            <!--    <script src="{% static 'vendor/datepicker/moment.min.js' %}"></script>-->
+            <!--    <script src="{% static 'vendor/datepicker/daterangepicker.js' %}"></script>-->
+
+            <!-- Main JS-->
+            <script src="{% static 'js/global.js' %}"></script>
+            <!-- modal load -->
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $("#exampleModalCenter").modal('show');
+                });
+            </script>
+
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+
+</html>
+<!-- end document-->

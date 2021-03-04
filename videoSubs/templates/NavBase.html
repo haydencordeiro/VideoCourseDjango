@@ -1,0 +1,66 @@
+{% block aboveNav %}
+{% endblock %}
+
+<!-- Divider -->
+<hr class="sidebar-divider my-0">
+
+
+<li class="nav-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+    <a class="nav-link" href="{% url 'AdminHome' %}">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span>Home</span></a>
+</li>
+<li class="nav-item {% if request.resolver_match.url_name == 'AddVideo' %}active{% endif %}">
+    <a class="nav-link" href="{% url 'AddVideo' %}">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span>Videos</span></a>
+</li>
+<li class="nav-item {% if request.resolver_match.url_name == 'AddTestimonial' %}active{% endif %}">
+    <a class="nav-link" href="{% url 'AddTestimonial' %}">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span>Testimonials</span></a>
+</li>
+<li class="nav-item {% if request.resolver_match.url_name == 'AddSubType' %}active{% endif %}">
+    <a class="nav-link" href="{% url 'AddSubType' %}">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span>Pricing</span></a>
+</li>
+<li class="nav-item {% if request.resolver_match.url_name == 'AddTypeAccess' %}active{% endif %}">
+    <a class="nav-link" href="{% url 'AddTypeAccess' %}">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span>Type Access</span></a>
+</li>
+<!-- Divider -->
+<hr class="sidebar-divider ">
+<!-- Heading -->
+<div class="sidebar-heading">
+    Live Site
+</div>
+
+<li class="nav-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+    <a class="nav-link" href="{% url 'home' %}">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span>Preview Site</span></a>
+</li>
+<!-- Nav Item - Utilities Collapse Menu -->
+<!-- <li class="nav-item {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+    <a class="nav-link " href="reports" aria-expanded="false">
+        <i class="fas fa-fw fa-wrench"></i>
+        <span>Reports</span>
+    </a>
+
+</li> -->
+
+<!-- <li class="nav-item {% if request.resolver_match.url_name == 'Table120' %}active{% endif %}">
+    <a class="nav-link " href="tables120hrs" aria-expanded="false">
+        <i class="fas fa-fw fa-wrench"></i>
+        <span>Tables</span>
+    </a>
+
+</li> -->
+
+
+<!-- Divider -->
+<hr class="sidebar-divider d-none d-md-block" />
+{% block belowNav %}
+{% endblock %}

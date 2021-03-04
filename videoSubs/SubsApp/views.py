@@ -1,3 +1,4 @@
+from typing import Type
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -12,6 +13,9 @@ from django.views.decorators.csrf import csrf_exempt
 from .Paytm import Checksum
 import datetime
 import pytz
+import collections
+import json
+import uuid
 # Create your views here.
 MERCHANT_KEY = 'kbzk1DSbJiV_O3p5'
 
@@ -68,19 +72,9 @@ def VideosPage(request):
             typesAllowed.append(i.canAccess.name)
     except:
         typesAllowed = []
-    print(typesAllowed)
-    print(typesAllowed)
-    print(typesAllowed)
-    print(typesAllowed)
-    print(typesAllowed)
-    print(typesAllowed)
+
     typesAllowed = ','.join(typesAllowed)
-    print(typesAllowed)
-    print(typesAllowed)
-    print(typesAllowed)
-    print(typesAllowed)
-    print(typesAllowed)
-    print(typesAllowed)
+
     context = {
         'videos': Video.objects.all(),
         'typesAllowed': typesAllowed,
@@ -141,7 +135,7 @@ def checkout(request, id):
         trans = Transations(user=request.user, amount=price, subType=subType
                             )
         trans.save()
-        trans.paytmOID = '1524dgatshdcpsodu'+str(trans.id)
+        trans.paytmOID = uuid.uuid4().hex[:20]+str(trans.id)
         trans.save()
         param_dict = {
             'MID': 'WorldP64425807474247',
@@ -151,7 +145,7 @@ def checkout(request, id):
             'INDUSTRY_TYPE_ID': 'Retail',
             'WEBSITE': 'WEBSTAGING',
             'CHANNEL_ID': 'WEB',
-            'CALLBACK_URL': 'http://127.0.0.1:8000/handlerequest/',
+            'CALLBACK_URL': 'https://gymdjango.herokuapp.com/handlerequest/',
 
         }
         param_dict['CHECKSUMHASH'] = Checksum.generate_checksum(
@@ -198,3 +192,209 @@ def handlerequest(request):
     return HttpResponsePermanentRedirect(reverse('home'))
 
     # return render(request, 'paymentstatus.html', {'response': response_dict})
+
+
+def AdminHome(request):
+
+    if request.user.is_staff:
+        l = []
+        for i in Transations.objects.all():
+            l.append(str(i.date)[5:7])
+            # print(i.date)
+        c = collections.Counter(l)
+        l = []
+        l.append(["date", "Month"])
+        for k in c:
+            l.append([int(k), int(c[k])])
+
+        # print(json.dumps(l))
+        context = {
+            "totalNoOfUsers": len(User.objects.all()),
+            "totalNoOfVideos": len(Video.objects.all()),
+            'recentTrans': Transations.objects.all().order_by("-date")[:5],
+            'noOfSubs': len(Subscription.objects.all()),
+            'noOfSubtypes': len(SubType.objects.all()),
+            'activitesGraph': json.dumps(l)
+
+        }
+        return render(request, 'home.html', context)
+    else:
+        return HttpResponsePermanentRedirect(reverse('home'))
+
+
+def AddVideo(request):
+    if request.user.is_staff:
+        if request.method == "POST":
+            temp = Video(title=request.POST['title'],
+                         ytId=request.POST['ytID'],
+                         desc=request.POST['desc'],
+                         subType=SubType.objects.get(
+                             id=int(request.POST['year']))
+
+                         )
+            temp.save()
+        context = {
+            "allVideos": Video.objects.all(),
+            'year': SubType.objects.all()
+
+        }
+        return render(request, 'AddVideos.html', context)
+    else:
+        return HttpResponsePermanentRedirect(reverse('home'))
+
+
+def DeleteVideo(request, **kwargs):
+    temp = Video.objects.get(id=kwargs['id'])
+    temp.delete()
+    messages.info(request, 'Deleted Successfully')
+    return HttpResponsePermanentRedirect(reverse('AddVideo'))
+
+
+def AddTestimonial(request):
+    if request.user.is_staff:
+        if request.method == "POST":
+            temp = Testimonials(name=request.POST['name'],
+
+                                desc=request.POST['desc'],
+
+                                )
+            temp.save()
+        context = {
+            "allVideos": Testimonials.objects.all(),
+
+
+        }
+        return render(request, 'AddTestimonial.html', context)
+    else:
+        return HttpResponsePermanentRedirect(reverse('home'))
+
+
+def DeleteTestimonial(request, **kwargs):
+    temp = Testimonials.objects.get(id=kwargs['id'])
+    temp.delete()
+    messages.info(request, 'Deleted Successfully')
+    return HttpResponsePermanentRedirect(reverse('AddTestimonial'))
+
+
+def AddTestimonial(request):
+    if request.user.is_staff:
+        if request.method == "POST":
+            temp = Testimonials(name=request.POST['name'],
+
+                                desc=request.POST['desc'],
+
+                                )
+            temp.save()
+            context = {
+                "allVideos": Testimonials.objects.all(),
+
+
+            }
+            return render(request, 'AddTestimonial.html', context)
+        else:
+            return HttpResponsePermanentRedirect(reverse('home'))
+    else:
+        return HttpResponsePermanentRedirect(reverse('home'))
+
+
+def AddTestimonial(request):
+    if request.user.is_staff:
+        if request.method == "POST":
+            temp = Testimonials(name=request.POST['name'],
+
+                                desc=request.POST['desc'],
+
+                                )
+            temp.save()
+
+        context = {
+            "allVideos": Testimonials.objects.all(),
+
+
+        }
+        return render(request, 'AddTestimonial.html', context)
+    else:
+
+        return HttpResponsePermanentRedirect(reverse('home'))
+
+
+def AddSubType(request):
+    if request.user.is_staff:
+        if request.method == "POST":
+            temp = SubType(name=request.POST['name'],
+
+                           price=float(request.POST['price']),
+                           color=request.POST['color'],
+                           discountPrice=float(
+                request.POST['discountPrice']),
+
+            )
+            temp.save()
+
+        context = {
+            "allVideos": SubType.objects.all(),
+
+
+        }
+        return render(request, 'AddSubType.html', context)
+
+    else:
+        return HttpResponsePermanentRedirect(reverse('home'))
+
+
+def DeleteSubType(request, **kwargs):
+    temp = SubType.objects.get(id=kwargs['id'])
+    temp.delete()
+    messages.info(request, 'Deleted Successfully')
+    return HttpResponsePermanentRedirect(reverse('AddSubType'))
+
+
+def EditSubType(request, **kwargs):
+    if request.method == "POST":
+        temp = SubType.objects.get(id=int(kwargs['id']))
+        temp.name = request.POST['name']
+        temp.price = request.POST['price']
+        temp.discountPrice = request.POST['dprice']
+        temp.color = request.POST['color']
+        temp.save()
+        return HttpResponsePermanentRedirect(reverse('AddSubType'))
+
+    context = {
+        "sub": SubType.objects.get(id=int(kwargs['id'])),
+
+
+    }
+    return render(request, 'EditPricing.html', context)
+    # return HttpResponsePermanentRedirect(reverse('AddSubType'))
+
+
+def AddTypeAccess(request):
+    if request.user.is_staff:
+        if request.method == "POST":
+
+            temp = TypeAccess(
+                subType=SubType.objects.get(id=int(request.POST['type'])),
+                canAccess=SubType.objects.get(id=int(request.POST['can'])),
+
+
+
+            )
+            temp.save()
+
+        context = {
+            "allVideos": TypeAccess.objects.all().order_by('subType'),
+            'year': SubType.objects.all()
+
+
+        }
+        return render(request, 'AddTypeAccess.html', context)
+
+    else:
+        return HttpResponsePermanentRedirect(reverse('home'))
+
+
+def DeleteTypeAccess(request, **kwargs):
+    temp = TypeAccess.objects.get(id=kwargs['id'])
+    temp.delete()
+    messages.info(request, 'Deleted Successfully')
+    return HttpResponsePermanentRedirect(reverse('AddTypeAccess'))
