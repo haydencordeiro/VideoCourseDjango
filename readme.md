@@ -1,31 +1,51 @@
-### TO DO (Required)
+# Project Title
 
-- [x] Setup
-- [x] Load Static Files
-- [x] Login Page
-- [x] Register Page
-- [ ] Admin Dashboard ui
-- [x] Create Models
-- [x] Register
-- [x] Login
-- [x] Create ui to play video (check if django has a build in video package)
-- [x] Home page Pricing
-- [x] Home page Free videos
-- [x] Videos page show videos
-- [x] Videos page prevent watching videos which dont match the plan
-- [x] Payment Implementation
-- [ ] Admin add video
-- [ ] Admin add testimonial
-- [ ] Admin add subscription
-- [ ] Admin delete video
-- [ ] Admin delete testimonial
-- [ ] Admin delte subscription
-- [ ]
-- [ ]
+## Table of Contents
 
-### TO DO (If Time)
+- [About](#about)
+- [Screenshots](#getting_started)
 
-- [ ] Home page testimonials
-- [ ] Home page staff
-- [ ]
-- [ ]
+## About <a name = "about"></a>
+
+This is a WebApp To Share Piad Courses Online\
+This was specially designed for a gym.\
+During the pandemic a lot of gyms closed, this was a way to bring the gym to your house and also prevent gyms from closing down.
+
+### Roles:
+
+    Customer
+    Admin
+
+### Customer Functions:
+
+    Authentication
+    Payments wtih paytm
+    Watch Videos
+
+### Admin Functions:
+
+    Add Videos
+    Add Testimonials
+    Get Stats
+    Add Pricing Plans
+
+### TechStack:
+
+    Django
+    Paytm Api (For Payment)
+
+## Screenshots <a name = "getting_started"></a>
+
+![Customer Home Page](/screenshots/ClientHome.png?raw=true)
+
+![Customer Videos Page](/screenshots/ClientVideos?raw=true)
+
+![Customer Payment Page](/screenshots/ClientPayment.png?raw=true)
+
+![Admin Dashboard Page](/screenshots/Dashboard.png?raw=true)
+
+![Admin Add Videos Page](/screenshots/AddVideos.png?raw=true)
+
+![Admin Add Testimonials Page](/screenshots/Addtestimonials.png?raw=true)
+
+![Admin Add Pricing Page](/screenshots/AddPricing.png?raw=true)
